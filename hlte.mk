@@ -21,6 +21,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
 
+PRODUCT_ENFORCE_RRO_TARGETS := *
+
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
