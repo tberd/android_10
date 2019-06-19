@@ -67,6 +67,14 @@
 #define BTHWDBG(param, ...) {}
 #endif
 
+#ifndef BTHW_FW_EXTENDED_CONFIGURATION
+#define BTHW_FW_EXTENDED_CONFIGURATION FALSE
+#endif
+
+#ifndef BTHW_FW_EXTENDED_CONFIGURATION_SCO_CODEC
+#define BTHW_FW_EXTENDED_CONFIGURATION_SCO_CODEC SCO_CODEC_CVSD
+#endif
+
 #define FW_PATCHFILE_EXTENSION      ".hcd"
 #define FW_PATCHFILE_EXTENSION_LEN  4
 #define FW_PATCHFILE_PATH_MAXLEN    248 /* Local_Name length of return of
@@ -276,6 +284,14 @@ static uint8_t sco_bus_wbs_clock_rate = INVALID_SCO_CLOCK_RATE;
 ******************************************************************************/
 static void hw_sco_i2spcm_config(uint16_t codec);
 static void hw_sco_i2spcm_config_from_command(void *p_mem, uint16_t codec);
+
+/******************************************************************************
+**  SCO configuration related functions
+******************************************************************************/
+#if (SCO_CFG_INCLUDED == TRUE)
+void hw_sco_config(void);
+static int hw_set_SCO_codec(uint16_t codec);
+#endif
 
 /******************************************************************************
 **  Controller Initialization Static Functions
@@ -1027,7 +1043,12 @@ void hw_config_cback(void *p_mem)
             case HW_CFG_SET_BD_ADDR:
                 ALOGI("vendor lib fwcfg completed");
                 bt_vendor_cbacks->dealloc(p_buf);
+
+#if (SCO_CFG_INCLUDED == TRUE && BTHW_FW_EXTENDED_CONFIGURATION == TRUE)
+                hw_sco_config();
+#else
                 bt_vendor_cbacks->fwcfg_cb(BT_VND_OP_RESULT_SUCCESS);
+#endif
 
                 hw_cfg_cb.state = 0;
 
@@ -1061,7 +1082,12 @@ void hw_config_cback(void *p_mem)
 
                 ALOGI("vendor lib fwcfg completed");
                 bt_vendor_cbacks->dealloc(p_buf);
+
+#if (SCO_CFG_INCLUDED == TRUE && BTHW_FW_EXTENDED_CONFIGURATION == TRUE)
+                hw_sco_config();
+#else
                 bt_vendor_cbacks->fwcfg_cb(BT_VND_OP_RESULT_SUCCESS);
+#endif
 
                 hw_cfg_cb.state = 0;
 
@@ -1244,6 +1270,10 @@ static void hw_sco_i2spcm_cfg_cback(void *p_mem)
     ALOGI("sco I2S/PCM config result %d [0-Success, 1-Fail]", status);
     if (bt_vendor_cbacks)
     {
+#if (BTHW_FW_EXTENDED_CONFIGURATION == TRUE)
+        bt_vendor_cbacks->fwcfg_cb(BT_VND_OP_RESULT_SUCCESS);
+        bt_vendor_cbacks->scocfg_cb(status);
+#endif
         bt_vendor_cbacks->audio_state_cb(status);
     }
 }
@@ -1487,6 +1517,15 @@ void hw_sco_config(void)
      *  immediately with SCO_CODEC_CVSD by default.
      */
 
+#if (BTHW_FW_EXTENDED_CONFIGURATION == TRUE)
+    uint8_t ret_val = hw_set_SCO_codec(BTHW_FW_EXTENDED_CONFIGURATION_SCO_CODEC);
+    if (ret_val == -1 && bt_vendor_cbacks)
+    {
+        bt_vendor_cbacks->fwcfg_cb(BT_VND_OP_RESULT_SUCCESS);
+        bt_vendor_cbacks->scocfg_cb(BT_VND_OP_RESULT_FAIL);
+        bt_vendor_cbacks->audio_state_cb(BT_VND_OP_RESULT_FAIL);
+    }
+#else
     if (SCO_INTERFACE_I2S == sco_bus_interface) {
         hw_sco_i2spcm_config(SCO_CODEC_CVSD);
     }
@@ -1495,6 +1534,7 @@ void hw_sco_config(void)
     {
         bt_vendor_cbacks->scocfg_cb(BT_VND_OP_RESULT_SUCCESS);
     }
+#endif
 }
 
 static void hw_sco_i2spcm_config_from_command(void *p_mem, uint16_t codec) {
@@ -1506,9 +1546,17 @@ static void hw_sco_i2spcm_config_from_command(void *p_mem, uint16_t codec) {
         bt_vendor_cbacks->dealloc(p_evt_buf);
 
     if (command_success)
+    {
         hw_sco_i2spcm_config(codec);
+    }
     else if (bt_vendor_cbacks)
+    {
+#if (BTHW_FW_EXTENDED_CONFIGURATION == TRUE)
+        bt_vendor_cbacks->fwcfg_cb(BT_VND_OP_RESULT_SUCCESS);
+        bt_vendor_cbacks->scocfg_cb(BT_VND_OP_RESULT_FAIL);
+#endif
         bt_vendor_cbacks->audio_state_cb(BT_VND_OP_RESULT_FAIL);
+    }
 }
 
 
@@ -1571,7 +1619,14 @@ static void hw_sco_i2spcm_config(uint16_t codec)
             return;
     }
 
-    bt_vendor_cbacks->audio_state_cb(BT_VND_OP_RESULT_FAIL);
+    if (bt_vendor_cbacks)
+    {
+#if (BTHW_FW_EXTENDED_CONFIGURATION == TRUE)
+        bt_vendor_cbacks->fwcfg_cb(BT_VND_OP_RESULT_SUCCESS);
+        bt_vendor_cbacks->scocfg_cb(BT_VND_OP_RESULT_FAIL);
+#endif
+        bt_vendor_cbacks->audio_state_cb(BT_VND_OP_RESULT_FAIL);
+    }
 }
 
 /*******************************************************************************
