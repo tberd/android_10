@@ -15,6 +15,8 @@ vendor.audio.av.streaming.offload.enable=true
 vendor.audio.offload.gapless.enabled=true
 vendor.audio.offload.multiple.enabled=true
 vendor.voice.path.for.pcm.voip=true
+debug.stagefright.omx_default_rank.sw-audio=1
+debug.stagefright.omx_default_rank=0
 
 # Camera
 camera2.portability.force_api=1
