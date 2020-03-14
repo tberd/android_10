@@ -3,12 +3,9 @@
 # Needed Exports to fix Some Errors
 export SELINUX_IGNORE_NEVERALLOWS=true
 export TEMPORARY_DISABLE_PATH_RESTRICTIONS=true
-export DERP_BUILD_ZIP_TYPE=VANILLA
 
-rm -rf vendor/gapps
-
-# revert LatinIME shit
- git -C packages/inputmethods/LatinIME revert --no-edit 973bbe103901192197b9ca2ac9f03e02e80ccc7d
+#netd fix 
+ git -C system/netd fetch https://github.com/Jprimero15/android_10 system_netd && git -C system/netd cherry-pick 1b57bbbae670664b9e1b3095f7f998c74a640b45 
 
 # fw/base: Enable home button wake
 git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_base-1 fw_base && git -C frameworks/base cherry-pick e25266e6ceb1f8912699f4beb46e3d30d10509e3
