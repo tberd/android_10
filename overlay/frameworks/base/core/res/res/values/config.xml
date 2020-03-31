@@ -279,4 +279,7 @@
     <string name="config_smartChargingResumeValue" translatable="false">0</string>
     <bool name="config_smartChargingAvailable">true</bool>
 
+    <!-- Whether to use in-built Screen Record service -->
+    <bool name="config_showScreenRecord">false</bool>
+
 </resources>
