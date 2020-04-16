@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ril sprint fix
+git -C packages/providers/TelephonyProvider fetch https://github.com/Claymore1297/packages_providers_TelephonyProvider q10.0 && git -C packages/providers/TelephonyProvider cherry-pick a1e2b2e355f47aadea78599a746081ebaebc73bd
+
 # fw/av picks
 cd frameworks/av
 git fetch https://github.com/crdroidandroid/android_frameworks_av 10.0-20200203
