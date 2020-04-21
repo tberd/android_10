@@ -8,4 +8,4 @@ git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_
 git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_base-1 ten && git -C frameworks/base cherry-pick 8e12af5bcbeeef9762b67ae1c390611b3f718919
 
 # lockscreen battery charge info fix
-git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_base-1 ten && git -C frameworks/base cherry-pick 38940ed99aa87995e5ff51d333d3c395eb132873
+git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_base-1 ten && git -C frameworks/base cherry-pick 2898028a61ca52defb5efd2e8068d3d6ba211563
