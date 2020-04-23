@@ -314,7 +314,6 @@ static int process_activity_launch_hint(void* data) {
         launch_handle = interaction_with_handle(launch_handle, kMaxLaunchDuration,
                                                 ARRAY_SIZE(resources_launch), resources_launch);
         if (!CHECK_HANDLE(launch_handle)) {
-            ALOGE("Failed to perform launch boost");
             return HINT_NONE;
         }
         launch_mode = 1;
