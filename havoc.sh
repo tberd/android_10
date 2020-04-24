@@ -20,5 +20,5 @@ git -C vendor/qcom/opensource/power fetch https://github.com/Jprimero15/android_
 git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_base-1 ten && git -C frameworks/base cherry-pick cb60979075bc91af518284670dc4550602748472 
 
 # fw/av picks wfd
-git -C frameworks/av fetch https://github.com/Jprimero15/android_10/tree/fw_av&& git -C frameworks/av cherry-pick 55e086441abc08aeee583cbbe3ac9c4aeb874cd5
+git -C frameworks/av fetch https://github.com/Jprimero15/android_10/tree/fw_av && git -C frameworks/av cherry-pick 55e086441abc08aeee583cbbe3ac9c4aeb874cd5
 
