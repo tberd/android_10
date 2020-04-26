@@ -2447,9 +2447,13 @@ static uint8_t bta_dm_authentication_complete_cback(
     if (bta_dm_cb.p_sec_cback)
       bta_dm_cb.p_sec_cback(BTA_DM_AUTH_CMPL_EVT, &sec_event);
 
-    if (result == HCI_ERR_AUTH_FAILURE || result == HCI_ERR_KEY_MISSING ||
-        result == HCI_ERR_HOST_REJECT_SECURITY ||
-        result == HCI_ERR_ENCRY_MODE_NOT_ACCEPTABLE) {
+    if (result != HCI_ERR_LMP_RESPONSE_TIMEOUT &&
+        result !=  HCI_ERR_PAGE_TIMEOUT &&
+        result != HCI_ERR_CONNECTION_TOUT &&
+        result != HCI_ERR_AUTH_FAILURE &&
+        result != HCI_ERR_KEY_MISSING &&
+        result != HCI_ERR_HOST_REJECT_SECURITY &&
+        result != HCI_ERR_ENCRY_MODE_NOT_ACCEPTABLE) {
       APPL_TRACE_WARNING("%s deleting %s - result: 0x%02x", __func__,
                          bd_addr.ToString().c_str(), result);
       bta_dm_remove_sec_dev_entry(bd_addr);
