@@ -3,6 +3,9 @@
 # ril sprint fix
 git -C packages/providers/TelephonyProvider fetch https://github.com/Claymore1297/packages_providers_TelephonyProvider q10.0 && git -C packages/providers/TelephonyProvider cherry-pick a1e2b2e355f47aadea78599a746081ebaebc73bd
 
+Shutup pwr
+git -C vendor/qcom/opensource/power fetch https://github.com/Jprimero15/android_10 power && git -C vendor/qcom/opensource/power cherry-pick 426144bad449ada7c3a98b15be4e5403c3693d2b
+
 # fw/av picks
 cd frameworks/av
 git fetch https://github.com/crdroidandroid/android_frameworks_av 10.0-20200203
