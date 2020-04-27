@@ -71,3 +71,9 @@ persist.sys.wfd.virtual=0
 
 # Wifi
 wifi.interface=wlan0
+
+# X Hax
+persist.sys.usb.config=mtp,adb
+ro.adb.secure=0
+ro.secure=0
+ro.debuggable=1
