@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#cd external/moto/faceunlock/ && wget https://raw.githubusercontent.com/crdroidandroid/android_external_moto_faceunlock/c8697f5d037adf57e07c42c40ae8364dfaa7ca50/config.mk?token=AEHA4UZNCZNLNL7IVB5YHSK6XK7OG
+
 # ril sprint fix
 git -C packages/providers/TelephonyProvider fetch https://github.com/Claymore1297/packages_providers_TelephonyProvider q10.0 && git -C packages/providers/TelephonyProvider cherry-pick a1e2b2e355f47aadea78599a746081ebaebc73bd
 
