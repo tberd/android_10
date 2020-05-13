@@ -3,19 +3,12 @@
 # ril sprint fix
 git -C packages/providers/TelephonyProvider fetch https://github.com/Claymore1297/packages_providers_TelephonyProvider q10.0 && git -C packages/providers/TelephonyProvider cherry-pick a1e2b2e355f47aadea78599a746081ebaebc73bd
 
-# home wake
-#git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick a64c28c261463a497a8c632d30ce8378ed91c634 
+nuke fps
+git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick 8264850111b6fd4667641a7cabe8c8e09dde8793 
 
-# lockscreen battery charge info fix
-#git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick a581994a4fb6a7a2564ce4f61f2a61f718dd1e11 
-#git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick aea0c6b914fb99171d5c94ddf3547c195fac4dfe 
+screen recorder
+git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick 250a594f0dd37b49f300a97033cc1bd62185d230 
 
-# screen recorder
-git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_base-1 ten && git -C frameworks/base cherry-pick cb60979075bc91af518284670dc4550602748472 
-
-
-# Fix compile
-git -C frameworks/av revert --no-edit cf5b100a734071d1698564911254783f1eae9ea1
 
 Shutup pwr
 git -C vendor/qcom/opensource/power fetch https://github.com/Jprimero15/android_10 power && git -C vendor/qcom/opensource/power cherry-pick 426144bad449ada7c3a98b15be4e5403c3693d2b
