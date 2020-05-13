@@ -10,6 +10,7 @@ git -C packages/providers/TelephonyProvider fetch https://github.com/Claymore129
 #git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick a581994a4fb6a7a2564ce4f61f2a61f718dd1e11 
 #git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick aea0c6b914fb99171d5c94ddf3547c195fac4dfe 
 
+# screen recorder
 git -C frameworks/base fetch https://github.com/Staydirtyboi/android_frameworks_base-1 ten && git -C frameworks/base cherry-pick cb60979075bc91af518284670dc4550602748472 
 
 
