@@ -12,3 +12,9 @@ git -C packages/providers/TelephonyProvider fetch https://github.com/Claymore129
 
 # Fix compile
 git -C frameworks/av revert --no-edit cf5b100a734071d1698564911254783f1eae9ea1
+
+Shutup pwr
+git -C vendor/qcom/opensource/power fetch https://github.com/Jprimero15/android_10 power && git -C vendor/qcom/opensource/power cherry-pick 426144bad449ada7c3a98b15be4e5403c3693d2b
+
+# fw/av picks wfd
+git -C frameworks/av fetch https://github.com/Jprimero15/android_10 fw_av && git -C frameworks/av cherry-pick 55e086441abc08aeee583cbbe3ac9c4aeb874cd5
