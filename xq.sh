@@ -9,6 +9,8 @@ git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq 
 #screen recorder
 git -C frameworks/base fetch https://github.com/Staydirtyboi/frameworks_base xq && git -C frameworks/base cherry-pick 250a594f0dd37b49f300a97033cc1bd62185d230 
 
+#use Samsung doze
+git -C packages/apps/Xtensions fetch https://github.com/Jprimero15/android_10 xtension git -C packages/apps/Xtensions cherry-pick db5e4214f71b17819f7123ec76896957948cacc1
 
 #Shutup pwr
 git -C vendor/qcom/opensource/power fetch https://github.com/Jprimero15/android_10 power && git -C vendor/qcom/opensource/power cherry-pick 426144bad449ada7c3a98b15be4e5403c3693d2b
