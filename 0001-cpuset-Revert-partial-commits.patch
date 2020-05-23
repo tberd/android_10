@@ -1,0 +1,78 @@
+From 8bb6e5614c96361ad14e86c8d951e71d33f47d2e Mon Sep 17 00:00:00 2001
+Message-Id: <8bb6e5614c96361ad14e86c8d951e71d33f47d2e.1590229559.git.gobinda.joy@gmail.com>
+From: Gobinda Joy <gobinda.joy@gmail.com>
+Date: Sat, 23 May 2020 16:06:39 +0600
+Subject: [PATCH] cpuset: Revert partial commits
+
+This commits are incomplete, fails build if CONFIG_CPUSET is enabled.
+
+* cpuset: Add allow_attach hook for cpusets on android.
+* cpuset: Add attach hook for cpusets on android.
+
+Signed-off-by: Gobinda Joy <gobinda.joy@gmail.com>
+---
+ kernel/cpuset.c | 36 +-----------------------------------
+ 1 file changed, 1 insertion(+), 35 deletions(-)
+
+diff --git a/kernel/cpuset.c b/kernel/cpuset.c
+index aee460a16ef5..069bf3dbc434 100644
+--- a/kernel/cpuset.c
++++ b/kernel/cpuset.c
+@@ -1419,38 +1419,6 @@ static int cpuset_can_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
+ 	return 0;
+ }
+ 
+-static int cpuset_allow_attach(struct cgroup *cgrp,
+-			       struct cgroup_taskset *tset)
+-{
+-	const struct cred *cred = current_cred(), *tcred;
+-	struct task_struct *task;
+-
+-	cgroup_taskset_for_each(task, cgrp, tset) {
+-		tcred = __task_cred(task);
+-
+-		if ((current != task) && !capable(CAP_SYS_ADMIN) &&
+-		    cred->euid != tcred->uid && cred->euid != tcred->suid)
+-			return -EACCES;
+-	}
+-
+-	return 0;
+-}
+-
+-static void cpuset_cancel_attach(struct cgroup *cgrp,
+-				 struct cgroup_taskset *tset)
+-{
+-	mutex_lock(&cpuset_mutex);
+-	cgroup_cs(cgrp)->attach_in_progress--;
+-	mutex_unlock(&cpuset_mutex);
+-}
+-
+-/*
+- * Protected by cpuset_mutex.  cpus_attach is used only by cpuset_attach()
+- * but we can't allocate it dynamically there.  Define it global and
+- * allocate from cpuset_init().
+- */
+-static cpumask_var_t cpus_attach;
+-
+ static void cpuset_attach(struct cgroup *cgrp, struct cgroup_taskset *tset)
+ {
+ 	struct mm_struct *mm;
+@@ -1929,8 +1897,6 @@ struct cgroup_subsys cpuset_subsys = {
+ 	.create = cpuset_create,
+ 	.destroy = cpuset_destroy,
+ 	.can_attach = cpuset_can_attach,
+-	.allow_attach = cpuset_allow_attach,
+-	.cancel_attach = cpuset_cancel_attach,
+ 	.attach = cpuset_attach,
+ 	.populate = cpuset_populate,
+ 	.post_clone = cpuset_post_clone,
+@@ -2643,4 +2609,4 @@ void cpuset_task_status_allowed(struct seq_file *m, struct task_struct *task)
+ 	seq_printf(m, "Mems_allowed_list:\t");
+ 	seq_nodemask_list(m, &task->mems_allowed);
+ 	seq_printf(m, "\n");
+-}
++}
+\ No newline at end of file
+-- 
+2.26.2
+
